@@ -1,3 +1,3 @@
-# Stack Overflow
+# [Justin's Stack Overflow](https://stackoverflow.com/users/5741981/justin)
 
-A repo containing questions I've [answered](https://github.com/JustinMShea/stack-overflow/tree/master/answered) on Stack Overflow.
+Questions I've [answered](https://github.com/JustinMShea/stack-overflow/tree/master/answered) on Stack Overflow.
