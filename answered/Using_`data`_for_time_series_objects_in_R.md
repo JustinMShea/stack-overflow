@@ -1,8 +1,8 @@
 Using `data()` for time series objects in R
 ================
 
-[Original Post](https://stackoverflow.com/questions/44736963/using-data-for-time-series-objects-in-r/44738106#44738106)
------------------------------------------------------------------------------------------------------------------------
+[Using `data()` for time series objects in R](https://stackoverflow.com/questions/44736963/using-data-for-time-series-objects-in-r/44738106#44738106)
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 I apologise if this question has been asked already (I haven't been able to find it). I was under the impression that I could access datasets in R using data(), for example, from the datasets package. However, this doesn't work for time series objects. Are there other examples where this is not the case? (And why?)
 
@@ -24,8 +24,8 @@ ts("ldeaths")    # works
 
 (However, this works for data("austres"), which is also a time-series object).
 
-Answer
-------
+My Answer
+---------
 
 The data function is designed to load package data sets and all their attributes, time series or otherwise.
 

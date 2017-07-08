@@ -16,7 +16,7 @@ For the most part, in the books that I've read, indicators are graphed along sid
 
 What articles/texts are available that discuss the statistical methods behind identifying and measuring economic indicators?
 
-## Answer
+## My Answer
 
 The Wooldridge texts are part of most graduate level econometric studies in the US. They are:
 

@@ -1,8 +1,8 @@
 When should I use setDT() instead of data.table() to create a data.table?
 ================
 
-[Original Post](https://stackoverflow.com/questions/41917887/when-should-i-use-setdt-instead-of-data-table-to-create-a-data-table)
-----------------------------------------------------------------------------------------------------------------------------------
+[When should I use setDT() instead of data.table() to create a data.table?](https://stackoverflow.com/questions/41917887/when-should-i-use-setdt-instead-of-data-table-to-create-a-data-table)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 I am having difficulty grasping the essence of the setDT() function. As I read code on SO, I frequently come across the use of setDT() to create a data.table. Of course the use of data.table() is ubiquitous. I feel like I solidly comprehend the nature of data.table() yet the relevance of setDT() eludes me. ?setDT tells me this:
 
@@ -60,8 +60,8 @@ Seemingly no difference in this instance. In another instance the difference is 
 
 When should I use setDT()? What makes setDT() relevant? Why not just make the original data.table() function capable of doing what setDT() is able to do?
 
-Answer
-------
+My Answer
+---------
 
 I like this question on stackoverflow because I think it is really about avoiding stack overflow in R when dealing with larger data sets. 😊 Those who are unfamiliar with data.table family of set operations may benefit from this discussion!
 
