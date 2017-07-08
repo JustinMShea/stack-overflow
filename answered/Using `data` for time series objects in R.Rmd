@@ -19,21 +19,24 @@ ts("ldeaths")    # works
 
 The data function is designed to load package data sets and all their attributes, time series or otherwise.
 
-I think the issue your having is that there is no stand-alone data set called ldeaths in the datasets package. ldeaths does exist as 1 of 3 data sets in the UKLungDeaths data set. The other two are fdeaths and mdeaths.
+I think the issue your having is that there is no stand-alone data set called ldeaths in the datasets package. `ldeaths` does exist as 1 of 3 data sets in the `UKLungDeaths` data set. The other two are `fdeaths` and `mdeaths`.
 
 The following should lazily load all data sets.
 
+```{r}
 data(UKLungDeaths)
+```
+Then, typing `ldeaths` in the console or using it as an argument in some function will load it.
 
-Then, typing ldeaths in the console or using it as an argument in some function will load it.
-
+```{r}
 str(ldeaths)
+```
 
 While it is uncommon for package authors to include multiple objects in 1 data set, it does happen. This line from the data function documentation gives on a 'heads up' about this:
 
-"For each given data set, the first two types (‘.R’ or ‘.r’, and ‘.RData’ or ‘.rda’ files) can create several variables in the load environment, which might all be named differently from the data set"
+> "For each given data set, the first two types (‘.R’ or ‘.r’, and ‘.RData’ or ‘.rda’ files) can create several variables in the load environment, which might all be named differently from the data set"
 
-That is the case here, as while there are three time series objects contained in the data set, not one of them is named UKLungDeaths.
+That is the case here, as while there are three time series objects contained in the data set, not one of them is named `UKLungDeaths`.
 
 This choice occurs when the package author uses the save function to write multiple R objects to an external file. In the wild, I've seen folks use the save function to bundle a description file with the data set, although this would not be the proper way to document something in a full on package. If your really curious, go read the documentation on the save function.
 
