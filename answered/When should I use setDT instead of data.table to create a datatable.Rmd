@@ -65,86 +65,109 @@ When should I use setDT()? What makes setDT() relevant? Why not just make the or
 
 ## My Answer
 
-I like this question on stackoverflow because I think it is really about avoiding stack overflow in R when dealing with larger data sets. 😊 Those who are unfamiliar with data.table family of set operations may benefit from this discussion!
+**Update:**
+>       "@Roland makes some good points in the comments section, and the post is better for them. While I originally focused on memory overflow issues, he pointed out that even if this doesn't happen, memory management of various copies takes substantial time, which is a more common everyday concern. Examples of both issues have now been added as well.""
 
-One should use setDT() when working with larger data sets that take up a considerable amount of RAM because the operation will modify each object in place, conserving memory. For data that is a very small percentage of RAM, using data.table’s copy-and-modify is fine.
+I like this question on stackoverflow because I think it is really about avoiding stack overflow in R when dealing with larger data sets. 😊  Those who are unfamiliar with `data.table` family of `set` operations may benefit from this discussion!
 
-The creation of the setDT function was actually inspired by the following thread on stack overflow, which is about working with a large data set (several GB's). You will see Matt Dowle chime in an suggest the 'setDT' name.
+One should use `setDT()` when working with larger data sets that take up a considerable amount of RAM because the operation will modify each object in place, conserving memory. For data that is a very small percentage of RAM, using data.table’s copy-and-modify is fine. 
 
-[convert-a-data-frame-to-a-data-table-without-copy](https://stackoverflow.com/questions/20345022/convert-a-data-frame-to-a-data-table-without-copy)
+The creation of the `setDT` function was actually inspired by the following thread on stack overflow, which is about working with a large data set (several GB's). You will see Matt Dowle chime in an suggest the 'setDT' name.
+
+ https://stackoverflow.com/questions/20345022/convert-a-data-frame-to-a-data-table-without-copy
 
 **A bit more depth:**
 
-With R, data is stored in memory. This speeds things up considerably because RAM is much faster to access than storage devices. However, a problem can arise when one’s data set is a large portion of RAM. Why? Because base R has a tendency to make copies of each data.frame when some operations are applied to them. This has improved after version 3.1, but addressing that is beyond the scope of this post. If one is pulling multiple data.frames or lists into one data.frame or data.table, your memory usage will expand rather quickly because at some point during the operation, multiple copies of your data exist in RAM. The function tracemem can help you determine how many times an object is being copied in R. So...If your data set is big enough, you may run out of memory when all the copies are produced, and your stack will overflow. See example of this below:
-
+With R, data is stored in memory. This speeds things up considerably because RAM is much faster to access than storage devices. However, a problem can arise when one’s data set is a large portion of RAM. Why? Because base R has a tendency to make copies of each `data.frame` when some operations are applied to them. This has improved after version 3.1, but addressing that is beyond the scope of this post. If one is pulling multiple `data.frame`s or `list`s into one `data.frame` or `data.table`, your memory usage will expand rather quickly because at some point during the operation, multiple copies of your data exist in RAM. If the data set is big enough, you may run out of memory when all the copies are produced, and your stack will overflow. See example of this below. We get an error, and original memory address and class of object does not change.
+ 
 ```{r, eval=FALSE}
-library(pryr)
-library(data.table)
-library(microbenchmark)
-> N <- 1e8
-> P <- 1e2
-> 
-> data <- as.data.frame(rep(data.frame(rnorm(N)), P))
-> 
-> object_size(data)
-800 MB
-> tracemem(data)
-[1] "<00000000180C1150>"
-> data1 <- data.table(data)
-Error: cannot allocate vector of size 762.9 Mb
+    > N <- 1e8
+    > P <- 1e2
+    > data <- as.data.frame(rep(data.frame(rnorm(N)), P))
+    > 
+    > pryr::object_size(data)
+    800 MB
+    > 
+    > tracemem(data)
+    [1] "<0000000006D2DF18>"
+    > 
+    > data <- data.table(data)
+    Error: cannot allocate vector of size 762.9 Mb
+    > 
+    > tracemem(data)
+    [1] "<0000000006D2DF18>"
+    > class(data)
+    [1] "data.frame"
+    >
 ```
 
-The ability to just modify the object in place without copying is a big deal. That is what setDT does when it takes a list or data.frame and returns a data.table. The same example as above using setDT, now works fine and without error.
+The ability to just modify the object in place without copying is a big deal. That is what `setDT` does when it takes a `list` or `data.frame` and returns a `data.table`. The same example as above using `setDT`, now works fine and without error. Both class and memory address change, and no copies take place.
 
 ```{r, eval=FALSE}
-> tracemem(data)
-[1] "<00000000180C1150>"
-> data2 <- setDT(data)
-> tracemem(data2)
-[1] "<000000001A196A48>"
+    > tracemem(data)
+    [1] "<0000000006D2DF18>"
+    > class(data)
+    [1] "data.frame"
+    > 
+    > setDT(data)
+    >  
+    > tracemem(data)
+    [1] "<0000000006A8C758>"
+    > class(data)
+    [1] "data.table" "data.frame"
 ```
 
-@Roland points out that for most people, the bigger concern is speed, which suffers as a side effect of such intensive use of memory management. Here is an example with smaller data that does not crash the cpu, and illustrates how much faster setDT is for this job. Notice the results of 'tracemem' in the wake of data1 <- data.table(data), making copies of data. Contrast that with 'data2 <- setDT(data)' which doesn't print a single copy. We have to then call tracemem(data2) to see the newly assigned memory address.
+@Roland points out that for most people, the bigger concern is speed, which suffers as a side effect of such intensive use of memory management. Here is an example with smaller data that does not crash the cpu, and illustrates how much faster `setDT` is for this job. Notice the results of 'tracemem' in the wake of `data <- data.table(data)`, making copies of `data`. Contrast that with `setDT(data)` which doesn't print a single copy. We have to then call `tracemem(data)` to see the new memory address.
 
 ```{r, eval=FALSE}
-> N <- 1e6
-> P <- 1e2
-> data <- as.data.frame(rep(data.frame(rnorm(N)), P))
-> object_size(data)
-8.01 MB
-> tracemem(data)
-[1] "<000000001CC36A78>"
-> 
-> data1 <- data.table(data)
-tracemem[0x000000001cc36a78 -> 0x000000000ca75d18]: data.table 
-tracemem[0x000000000ca75d18 -> 0x000000001cbf1d30]: copy as.data.table.data.frame as.data.table data.table 
-tracemem[0x000000000ca75d18 -> 0x000000001a9c5448]: as.list.data.frame as.list vapply copy as.data.table.data.frame as.data.table data.table 
-> 
-> tracemem(data)
-[1] "<000000001CC36A78>"
-> 
-> data2 <- setDT(data)
->  
-> tracemem(data2)
-[1] "<000000001376EEE8>"
->
-> data <- as.data.frame(rep(data.frame(rnorm(N)), P))
-> microbenchmark(data.table(data), setDT(data))
-Unit: microseconds
-            expr        min          lq         mean      median         uq        
- data.table(data) 607392.340 730672.8620 755195.35575 746919.9160 779550.867 
-      setDT(data)     48.237     54.5665     66.75908     71.5005     73.724    
-> 
+    > N <- 1e5
+    > P <- 1e2
+    > data <- as.data.frame(rep(data.frame(rnorm(N)), P))
+    > pryr::object_size(data)
+    808 kB
+
+    > # data.table method
+    > tracemem(data)
+    [1] "<0000000019098438>"
+    > data <- data.table(data)
+    tracemem[0x0000000019098438 -> 0x0000000007aad7d8]: data.table 
+    tracemem[0x0000000007aad7d8 -> 0x0000000007c518b8]: copy as.data.table.data.frame as.data.table data.table 
+    tracemem[0x0000000007aad7d8 -> 0x0000000018e454c8]: as.list.data.frame as.list vapply copy as.data.table.data.frame as.data.table data.table 
+    > class(data)
+    [1] "data.table" "data.frame"
+    > 
+    > # setDT method
+    > # back to data.frame
+    > data <- as.data.frame(data)
+    > class(data)
+    [1] "data.frame"
+    > tracemem(data)
+    [1] "<00000000125BE1A0>"
+    > setDT(data)
+    > tracemem(data)
+    [1] "<00000000125C2840>"
+    > class(data)
+    [1] "data.table" "data.frame"
+    > 
 ```
 
-Set functions can be used in many areas, not just when converting objects to a data.tables. You can find more information on the reference semantics and how to apply them elsewhere by calling the vignette on the subject.
+How does this impact timing? As we can see, `setDT` is much faster for it.
 
 ```{r, eval=FALSE}
-library(data.table)    
-vignette("datatable-reference-semantics")
+    > # timing example
+    > data <- as.data.frame(rep(data.frame(rnorm(N)), P))
+    > microbenchmark(setDT(data), data <- data.table(data))
+    Unit: microseconds
+                         expr       min         lq        mean    median            max neval        uq
+                  setDT(data)    49.948    55.7635    69.66017    73.553        100.238   100    79.198
+     data <- data.table(data) 54594.289 61238.8830 81545.64432 64179.131     611632.427   100 68647.917
 ```
 
-This is a great question and people thinking of using R with larger data sets can benefit from being familiar with the significant performance improvements of data.table reference semantics. On a side note, [Szilard Pafka gave an excellent talk at the recent R/Finance conference](https://channel9.msdn.com/Events/RFinance/RFinance-2017/No-Bullshit-Data-Science) in which he says that although the data size most work with is growing, CPU memory size is growing faster. Between accessing recent advances in CPU size with AWS and getting familiar with approaches to efficient programming, R users can bring our legacy of statistical programming to increasingly expanding modern data sets.
+Set functions can be used in many areas, not just when converting objects to a data.tables. You can find more information on the reference semantics and how to apply them elsewhere by calling the vignette on the subject. 
 
+```{r, eval=FALSE}
+    library(data.table)    
+    vignette("datatable-reference-semantics")
+```
 
-
+This is a great question and those thinking of using R with larger data sets or who just want to speed up data manipulation actives, can benefit from being familiar with the significant performance improvements of `data.table` reference semantics.

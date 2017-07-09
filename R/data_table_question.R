@@ -9,30 +9,41 @@ data <- as.data.frame(rep(data.frame(rnorm(N)), P))
 
 object_size(data)
 
-gc(reset=TRUE)
-
 tracemem(data)
 
-data1 <- data.table(data)
+data <- data.table(data)
 
 tracemem(data)
+class(data)
 
-data2 <- setDT(data)
+setDT(data)
  
-tracemem(data2)
-
-data <- as.data.frame(rep(data.frame(rnorm(N)), P))
-microbenchmark(data.table(data), setDT(data))
+tracemem(data)
+class(data)
 
 
-gc()
-
-
-N <- 1e6
+library(pryr)
+library(data.table)
+library(microbenchmark)
+N <- 1e5
 P <- 1e2
-
 data <- as.data.frame(rep(data.frame(rnorm(N)), P))
 
+# data.table method
 object_size(data)
+tracemem(data)
+data <- data.table(data)
+class(data)
 
-microbenchmark(data2 <- setDT(data), data1 <- data.table(data), times = 10)
+# setDT method
+# back to data.frame
+data <- as.data.frame(data)
+class(data)
+tracemem(data)
+setDT(data)
+tracemem(data)
+class(data)
+
+# timing example
+data <- as.data.frame(rep(data.frame(rnorm(N)), P))
+microbenchmark(setDT(data), data.table(data))
