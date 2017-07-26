@@ -10,10 +10,14 @@ colnames(df) <-  c("CompanyName",   "2001-01",  "2001-02"   ,"2001-03", "2001-04
 
 # Transpose the data frame
 df_t <- t(df)
-#Now, the save the first row, which contains the company names. 
+
+#Now, save the first row, which contains the company names. 
 company_names <- df_t[1,]
+
 # drop the first row and make df_t object class data.frame
+
 df_t <- data.frame(df_t[-1, ], stringsAsFactors = FALSE)
+
 # add the company names stored in "company_names" back as the column names
 colnames(df_t) <- company_names
 
