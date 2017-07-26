@@ -1,6 +1,6 @@
 ---
 title: "References about leading, lagging, and coincident economic indicators"
-output: github_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
