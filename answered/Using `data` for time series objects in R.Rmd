@@ -1,10 +1,11 @@
 ---
 title: "Using `data()` for time series objects in R"
-output: github_document
+output: pdf_document
 ---
 
-## [Using `data()` for time series objects in R](https://stackoverflow.com/questions/44736963/using-data-for-time-series-objects-in-r/44738106#44738106)
+## [\textcolor{blue}{Using `data()` for time series objects in R post link}](https://stackoverflow.com/questions/44736963/using-data-for-time-series-objects-in-r/44738106#44738106)
 
+## Question
 
 I apologise if this question has been asked already (I haven't been able to find it). I was under the impression that I could access datasets in R using data(), for example, from the datasets package. However, this doesn't work for time series objects. Are there other examples where this is not the case? (And why?)
 
