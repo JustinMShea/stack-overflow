@@ -1,13 +1,13 @@
 ---
 title: "STL ts frequency = 1"
-output: github_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## [STL ts frequency = 1](https://stackoverflow.com/questions/45335193/stl-ts-frequency-1)
+## [\textcolor{blue}{"STL ts frequency = 1" post link}](https://stackoverflow.com/questions/45335193/stl-ts-frequency-1)
 
 ## Question
 
@@ -15,10 +15,13 @@ I am using the stats::stl function for first time in order to identify and delet
 
 These are the original data I am working with:
 
-```
+```{r, tidy=TRUE}
 dat <- data.frame(year= seq(1962,2014,1),yields=c(1100,1040,1130,1174,1250,1350,1450,1226,1070,1474,1526,1719,1849,1766,1342,2000,1750,1750,2270,1550,1220,2400,2750,3200,2125,3125,3737,2297,3665,2859,3574,4519,3616,3247,3624,2964,4326,4321,4219,2818,4052,3770,4170,2854,3598,4767,4657,3564,4340,4573,3834,4700,4168))
+```
+
 This is the ts with frequency =1 (annual) created as input for STL function:
 
+```{r}
 time.series <- ts(data=dat$yields, frequency = 1, start=c(1962, 1), end=c(2014, 1))
 
 plot(time.series, xlab="Years", ylab="Kg/ha", main="Crop yields")
@@ -26,16 +29,14 @@ plot(time.series, xlab="Years", ylab="Kg/ha", main="Crop yields")
 
 When I try to run the function I get the following error message:
 
-```
+```{r, eval=FALSE}
 decomposed  <- stl(time.series, s.window='periodic')
-
 > Error in stl(time.series, s.window = "periodic") : series is not periodic or has less than two periods
-
 ```
 
 I know that my serie is annual and therefore I can not vary the frequency in the ts which it is seems what causes the error because when I change the frequency I get the seasonal, trend and remainder signals:
 
-```
+```{r, tidy=TRUE}
    time.series <- ts(data=dat$yields, frequency = 12, start=c(1962, 1), end=c(2014, 1))
    decomposed  <- stl(time.series, s.window='periodic')
    plot(decomposed)
@@ -45,10 +46,12 @@ I would like to know if there is a method to apply STL function with annual data
 
 Many thanks for your help.
 
+\newpage
+
 ## Answer
 Since your using annual data, there is no seasonal component, therefore seasonal decomposition of time series would not be appropriate. However, the `stats::stl` function calls the `loess` function to estimate trend, which is a local polynomial regression you can adjust to your liking. You can call `loess` directly and estimate your own trend as followings.
 
-```{r}
+```{r, tidy=TRUE}
 dat <- data.frame(year= seq(1962,2014,1),yields=c(1100,1040,1130,1174,1250,1350,1450,1226,1070,1474,1526,1719,1849,1766,1342,2000,1750,1750,2270,1550,1220,2400,2750,3200,2125,3125,3737,2297,3665,2859,3574,4519,3616,3247,3624,2964,4326,4321,4219,2818,4052,3770,4170,2854,3598,4767,4657,3564,4340,4573,3834,4700,4168))
 
 dat$trend  <- loess(yields ~ year, data = dat)$fitted
