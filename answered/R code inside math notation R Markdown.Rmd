@@ -1,0 +1,32 @@
+---
+title: "R code inside math notation R Markdown"
+output: pdf_document
+---
+
+## Question
+
+In R Markdown, I can get an inline r code chunk to run inside single $ math notation (only with a * before), but not double $$ math notation:
+
+* $H_o = `r 1 + 1`$
+
+works, but:
+
+$H_o = `r 1 + 1`$
+
+doesn't work, and neither does:
+
+$$H_o = `r 1 + 1`$$
+
+The double `$$` is more flexible being able to put math notation on multiple lines, but how can you add inline code chunks inside?
+
+
+## Answer
+
+It appears to work just fine for me!
+
+
+
+
+
+$$H_o = `r 1 + 1`$$
+
