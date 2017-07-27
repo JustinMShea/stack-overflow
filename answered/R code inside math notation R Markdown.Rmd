@@ -25,8 +25,12 @@ The double `$$` is more flexible being able to put math notation on multiple lin
 It appears to work just fine for me!
 
 
-
-
-
 $$H_o = `r 1 + 1`$$
+Using R 3.4.1, here are my `knitr` and `rmarkdown` versions:
 
+```{r}
+citation("knitr")
+
+citation("rmarkdown")
+
+````
