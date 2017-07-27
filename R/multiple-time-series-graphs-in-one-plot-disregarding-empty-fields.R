@@ -22,16 +22,16 @@ df_t <- data.frame(df_t[-1, ], stringsAsFactors = FALSE)
 colnames(df_t) <- company_names
 
 # You likely lost the data class during the transpose, so convert column to numerics
-df_numeric <- data.frame(sapply(df_t, FUN=as.numeric), row.names =  rownames(df_t))
+dfl_long <- data.frame(sapply(df_t, FUN=as.numeric), row.names =  rownames(df_t))
 
 
 # Now convert to time series based xts object.
 library(xts)
 # convert rownames "2001-01, 2001-02, ..." to yearmon fromat
-rownames(df_numeric ) <- as.yearmon(rownames(df_numeric ), "%Y-%m")
+rownames(dfl_long ) <- as.yearmon(rownames(dfl_long ), "%Y-%m")
 
 # pass the dates as an index to the xts via the `order.by` command.
-df_xts <- xts(df_numeric , order.by = as.yearmon(rownames(df_numeric )))
+df_xts <- xts(dfl_long , order.by = as.yearmon(rownames(dfl_long)))
 
 
 # Finall, we can use the "Last Observation Carried Forward" function to fill in the dates.
