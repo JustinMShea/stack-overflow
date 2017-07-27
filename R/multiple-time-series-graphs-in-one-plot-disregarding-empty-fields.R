@@ -3,7 +3,7 @@ https://stackoverflow.com/questions/45336684/multiple-time-series-graphs-in-one-
 df <-  read.table(text = c(" 
 CompanyA    NA  1000    NA  NA  NA  1000
 CompanyB    600 NA  NA  NA  600 NA
-CompanyC    NA  5000    NA  500 NA  NA"), 
+CompanyC    NA  5000    NA  5000 NA  NA"), 
                   header = F) 
 
 colnames(df) <-  c("CompanyName",   "2001-01",  "2001-02"   ,"2001-03", "2001-04",  "2001-05",  "2001-06")
