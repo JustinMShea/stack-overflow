@@ -1,6 +1,8 @@
 ---
 title: "Mean Returns in Time Series - Restarting after NA values - rstudio"
-output: github_document
+output: 
+    github_document: default
+    pdf_document: default
 ---
 
 
