@@ -14,6 +14,6 @@ Common questions I answered worth documenting for future reference.
 
 [STL Decomposition Error in R](https://github.com/JustinMShea/stack-overflow/blob/master/answered/STL_ts_frequency_%3D_1.pdf)
 
-[Multiple time series graphs in one plot disregarding empty fields](https://github.com/JustinMShea/stack-overflow/blob/master/answered/multiple_time_series_graphs_in_one_plot_disregarding_empty_fields.pdf)
+[Multiple time series graphs in one plot disregarding empty fields](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/multiple_time_series_graphs_in_one_plot_disregarding_empty_fields.md)
 
 [Mean Returns in Time Series - Restarting after NA values - rstudio](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/Mean_Returns_in_Time_Series-Restarting_after_NA_values-rstudio.md)

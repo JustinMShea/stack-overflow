@@ -6,7 +6,7 @@ Multiple time series graphs in one plot disregarding empty fields
 
 I have a question that may be simple but have been having difficult times to find a solution for... I have a data for different companies and for different years that looks like this:
 
-IMAGE OF WIDE FORM SPREADSHEET HERE
+![](C:\Users\Justin\Documents\R\stack-overflow\graphics\3iETs.png)
 
 I would like to draw a kind of time series graph for all the companies in one single graph. The point is that I don't want to have 0 for missing values for the corresponding intervals. The result that I expect will have the dates as the X axis and values as the Y axis. So, for example, the result for the line for CompanyA will be a horizontal line which starts from 2001-02 and ends at 2001-06 at the height of 1000 (as Y value). I would like to visualize the intervals for different companies... I was trying to use ggplot2 in R to draw it but not really successful... Could anybody help me to draw this in R? I have more than 500 rows and more than 180 columns.
 
