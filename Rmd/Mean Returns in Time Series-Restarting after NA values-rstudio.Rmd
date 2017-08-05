@@ -7,7 +7,7 @@ output:
 ---
 
 
-## [\textcolor{blue}{Question}](https://stackoverflow.com/questions/45465421/mean-returns-in-time-series-restarting-after-na-values-rstudio/45470156#45470156)
+## [Question Link](https://stackoverflow.com/questions/45465421/mean-returns-in-time-series-restarting-after-na-values-rstudio/45470156#45470156)
 
 Has anyone encountered calculating historical mean log returns in time series datasets?
 
