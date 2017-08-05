@@ -5,7 +5,7 @@
 
 Common questions I answered worth documenting for future reference.
 
-[When should I use setDT() instead of data.table() to create a data.table?](https://github.com/JustinMShea/stack-overflow/blob/master/answered/When_should_I_use_setDT_instead_of_data.table_to_create_a_datatable.md)
+[When should I use setDT() instead of data.table() to create a data.table?](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/When_should_I_use_setDT_instead_of_data.table_to_create_a_datatable.md)
 
 
 [References about leading, lagging, and coincident economic indicators](https://github.com/JustinMShea/stack-overflow/blob/master/answered/References_about_leading%2C_lagging%2C_and_coincident_economic_indicators.pdf)
