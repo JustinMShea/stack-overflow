@@ -1,0 +1,76 @@
+---
+title: "Mean Returns in Time Series - Restarting after NA values - rstudio"
+output: github_document
+---
+
+
+## [\textcolor{blue}{Question}](https://stackoverflow.com/questions/45465421/mean-returns-in-time-series-restarting-after-na-values-rstudio/45470156#45470156)
+Has anyone encountered calculating historical mean log returns in time series datasets?
+
+The dataset is ordered by individual security first and by time for each respective security. I am trying to form a historical mean log return, i.e. the mean log return for the security from its first appearance in the dataset to date, for each point in time for each security.
+
+Luckily, the return time series contains NAs between returns for differing securities. My idea is to calculate a historical mean that restarts after each NA that appears.
+
+A simple `cumsum()` probably will not do it, as the NAs will have to be dropped.
+
+I thought about using `rollmean()`, if I only knew an efficient way to specify the 'width' parameter to the length of the vector of consecutive preceding non-NAs. The current approach I am taking, based on Count how many consecutive values are true, takes significantly too much time, given the size of the data set I am working with. For any x of the form x : [r(1) r(2) ... r(N)], where r(2) is the log return in period 2:
+
+```{r, eval=FALSE}
+df <- data.frame(x, zcount = NA) 
+df[1,2] = 0 #df$x[1]=NA by construction of the data set
+for(i in 2:nrow(df)) 
+df$zcount[i] <- ifelse(!is.na(df$x[i]), df$zcount[i-1]+1, 0)
+```
+
+Any idea how to speed this up would be highly appreciated!
+
+
+## Answer
+
+You will need to reshape the data.frame to apply the cumsum function over each security. Here's how:
+
+First, I'll generate some data on 100 securities over 100 months which I think corresponds to your description of the data set
+
+```{r}
+securities <- 100
+months <- 100
+
+time <- seq.Date(as.Date("2010/1/1"), by = "months", length.out = months)
+ID <- rep(paste0("sec", 1:months), each = securities)
+returns <- rnorm(securities * months, mean = 0.08, sd = 2)
+
+df <- data.frame(time, ID, returns)
+
+head(df)
+tail(df)
+```
+
+Now, you must reshape your data so that each security column contains its returns, and each row represents the date.
+
+```{r}
+library(tidyr)
+df_wide <- spread(df, ID, returns)
+
+head(df_wide[,1:6])
+
+```
+
+Once this is done, you can use the `apply` function to `sum` every column which now represents each security. Or use the `cumsum` function. Notice the data object `df_wide[-1]`, which drops the time column. This is necessary to avoid the sum or cumsum functions throwing an error.
+
+```{r}
+matrix_sum <- apply(df_wide[-1], 2, FUN = sum)
+
+matrix_cumsum <- apply(df_wide[-1], 2, FUN = cumsum)
+```
+
+Now, add the `time` column back as a `data.frame` if you like:
+
+```{r}
+df_final <- data.frame(time = df_wide[,1], matrix_cumsum)
+
+head(df_final[,1:6])
+
+tail(df_final[,1:6])
+```
+
+
