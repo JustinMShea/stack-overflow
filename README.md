@@ -1,6 +1,6 @@
-## [Justin's Stack Overflows](https://stackoverflow.com/users/5741981/justin)
+# [Justin's Stack Overflows](https://stackoverflow.com/users/5741981/justin)
 
-Some questions I answered on Stack Overflow.
+Common questions I answered worth documenting for future reference.
 
 [When should I use setDT() instead of data.table() to create a data.table?](https://github.com/JustinMShea/stack-overflow/blob/master/answered/When_should_I_use_setDT_instead_of_data.table_to_create_a_datatable.md)
 
@@ -12,3 +12,5 @@ Some questions I answered on Stack Overflow.
 [STL Decomposition Error in R](https://github.com/JustinMShea/stack-overflow/blob/master/answered/STL_ts_frequency_%3D_1.pdf)
 
 [Multiple time series graphs in one plot disregarding empty fields](https://github.com/JustinMShea/stack-overflow/blob/master/answered/multiple_time_series_graphs_in_one_plot_disregarding_empty_fields.pdf)
+
+[Mean Returns in Time Series - Restarting after NA values - rstudio](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/Mean_Returns_in_Time_Series-Restarting_after_NA_values-rstudio.md)
