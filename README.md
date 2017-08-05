@@ -1,6 +1,7 @@
 ## [Justin's Stack Overflows](https://stackoverflow.com/users/5741981/justin)
 
-![](https://github.com/JustinMShea/stack-overflow/blob/master/graphics/stackoverflow_icon.png)
+[![](https://github.com/JustinMShea/stack-overflow/blob/master/graphics/stackoverflow_icon.png)](https://stackoverflow.com/users/5741981/justin)
+
 
 Common questions I answered worth documenting for future reference.
 
