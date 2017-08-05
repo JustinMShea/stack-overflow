@@ -1,4 +1,6 @@
-# [Justin's Stack Overflows](https://stackoverflow.com/users/5741981/justin)
+## [Justin's Stack Overflows](https://stackoverflow.com/users/5741981/justin)
+
+![](https://github.com/JustinMShea/stack-overflow/blob/master/graphics/stackoverflow_icon.png)
 
 Common questions I answered worth documenting for future reference.
 
