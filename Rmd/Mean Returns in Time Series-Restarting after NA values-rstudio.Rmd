@@ -1,5 +1,6 @@
 ---
 title: "Mean Returns in Time Series - Restarting after NA values - rstudio"
+Author: "Justin M. Shea"
 output: 
     github_document: default
     pdf_document: default
@@ -7,6 +8,7 @@ output:
 
 
 ## [\textcolor{blue}{Question}](https://stackoverflow.com/questions/45465421/mean-returns-in-time-series-restarting-after-na-values-rstudio/45470156#45470156)
+
 Has anyone encountered calculating historical mean log returns in time series datasets?
 
 The dataset is ordered by individual security first and by time for each respective security. I am trying to form a historical mean log return, i.e. the mean log return for the security from its first appearance in the dataset to date, for each point in time for each security.
