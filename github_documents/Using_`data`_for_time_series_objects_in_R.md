@@ -1,22 +1,31 @@
----
-title: "Using `data()` for time series objects in R"
-output: pdf_document
----
+Using `data()` for time series objects in R
+================
 
-## [\textcolor{blue}{Using `data()` for time series objects in R post link}](https://stackoverflow.com/questions/44736963/using-data-for-time-series-objects-in-r/44738106#44738106)
-
-## Question
+[Question Link](https://stackoverflow.com/questions/44736963/using-data-for-time-series-objects-in-r/44738106#44738106)
+-----------------------------------------------------------------------------------------------------------------------
 
 I apologise if this question has been asked already (I haven't been able to find it). I was under the impression that I could access datasets in R using data(), for example, from the datasets package. However, this doesn't work for time series objects. Are there other examples where this is not the case? (And why?)
 
-```{r}
+``` r
 data("ldeaths")  # no dice
+```
+
+    ## Warning in data("ldeaths"): data set 'ldeaths' not found
+
+``` r
 ts("ldeaths")    # works
 ```
 
+    ## Time Series:
+    ## Start = 1 
+    ## End = 1 
+    ## Frequency = 1 
+    ## [1] ldeaths
+
 (However, this works for data("austres"), which is also a time-series object).
 
-## My Answer
+My Answer
+---------
 
 The data function is designed to load package data sets and all their attributes, time series or otherwise.
 
@@ -24,18 +33,21 @@ I think the issue your having is that there is no stand-alone data set called ld
 
 The following should lazily load all data sets.
 
-```{r}
+``` r
 data(UKLungDeaths)
 ```
+
 Then, typing `ldeaths` in the console or using it as an argument in some function will load it.
 
-```{r}
+``` r
 str(ldeaths)
 ```
 
-While it is uncommon for package authors to include multiple objects in 1 data set, it does happen. This line from the data function documentation gives on a 'heads up' about this:
+    ##  Time-Series [1:72] from 1974 to 1980: 3035 2552 2704 2554 2014 ...
 
-> "For each given data set, the first two types (‘.R’ or ‘.r’, and ‘.RData’ or ‘.rda’ files) can create several variables in the load environment, which might all be named differently from the data set"
+While it is uncommon for package authors to include multiple objects in 1 data set, it does happen. This line from the `data` function documentation gives on a 'heads up' about this:
+
+> "For each given data set, the first two types (â€˜.Râ€™ or â€˜.râ€™, and â€˜.RDataâ€™ or â€˜.rdaâ€™ files) can create several variables in the load environment, which might all be named differently from the data set"
 
 That is the case here, as while there are three time series objects contained in the data set, not one of them is named `UKLungDeaths`.
 
