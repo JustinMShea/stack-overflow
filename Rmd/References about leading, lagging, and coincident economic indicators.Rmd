@@ -1,13 +1,16 @@
 ---
 title: "References about leading, lagging, and coincident economic indicators"
-output: pdf_document
+Author: "Justin M. Shea"
+output: 
+    github_document: default
+    pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## [References about leading, lagging, and coincident economic indicators](https://economics.stackexchange.com/questions/17342/references-about-leading-lagging-and-coincident-economic-indicators)
+## [Question Link](https://economics.stackexchange.com/questions/17342/references-about-leading-lagging-and-coincident-economic-indicators)
 
 
 Reading about macroeconomics, I've come across a great deal of information regarding leading, lagging, and coincident indicators. I'd like to learn more, specifically information related to measurements.
@@ -16,7 +19,7 @@ For the most part, in the books that I've read, indicators are graphed along sid
 
 What articles/texts are available that discuss the statistical methods behind identifying and measuring economic indicators?
 
-## My Answer
+## Answer
 
 The Wooldridge texts are part of most graduate level econometric studies in the US. They are:
 
@@ -34,7 +37,7 @@ Justin
 
 ***UPDATED EXAMPLES:*** from *INTRODUCTORY ECONOMETRICS by Jeffrey M. Wooldridge*
 
-While my suggested texts about Econometrics were downvoted, below is proof of how the text book referenced illustrates how Economists can use statistical methods to **identify and measure** leading, lagging, and coincident relationships among economic indicators.
+Below is proof of how the text book referenced illustrates how Economists can use statistical methods to **identify and measure** leading, lagging, and coincident relationships among economic indicators.
 
 The first examples are from chapter 16 on Simultaneous Equations. Examples `16.4` and `16.6` illustrate how to use **Instrumental-variable regression by two-stage least squares** for identifying and measuring **coincident** economic indicators. In this case, how annual inflation drops by about 1/3 of a percent for every 1 percent increase in the import share of GDP.
 
