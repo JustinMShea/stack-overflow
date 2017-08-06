@@ -1,9 +1,12 @@
 ---
 title: "R code inside math notation R Markdown"
-output: pdf_document
+Author: "Justin M. Shea"
+output: 
+    github_document: default
+    pdf_document: default
 ---
 
-## Question
+## [Question Link](https://stackoverflow.com/questions/45360684/r-code-inside-math-notation-r-markdown/45361147#45361147)
 
 In R Markdown, I can get an inline r code chunk to run inside single $ math notation (only with a * before), but not double $$ math notation:
 
@@ -22,15 +25,19 @@ The double `$$` is more flexible being able to put math notation on multiple lin
 
 ## Answer
 
-It appears to work just fine for me!
+I ran your example and it worked fine for me!
 
 
 $$H_o = `r 1 + 1`$$
+
+Perhaps you should check your version of rmarkdown and knitr. I have noticed over the years that version updates, and sometimes even using the most recent dev version, can fix a litany of small issues that arise.
+
 Using R 3.4.1, here are my `knitr` and `rmarkdown` versions:
 
 ```{r}
+citation()
+
 citation("knitr")
 
 citation("rmarkdown")
-
 ````
