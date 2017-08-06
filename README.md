@@ -18,3 +18,5 @@ Each question and answer is written in an `.Rmarkdown` file and stored in the Rm
 [Multiple time series graphs in one plot disregarding empty fields .md](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/multiple_time_series_graphs_in_one_plot_disregarding_empty_fields.md)
 
 [Mean Returns in Time Series - Restarting after NA values - rstudio .md](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/Mean_Returns_in_Time_Series-Restarting_after_NA_values-rstudio.md)
+
+[S3 method for class vector in R .md](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/S3_method_for_class_vector_in_R.md)

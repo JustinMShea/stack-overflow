@@ -1,0 +1,51 @@
+---
+title: "S3 method for class vector in R"
+Author: "Justin M. Shea"
+output: 
+    github_document: default
+    pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## {Question Link](https://stackoverflow.com/questions/45521273/s3-method-for-class-vector-in-r)
+
+Is it possible to create an S3 method for all vector types at once? I.e. one that is called for a numeric, integer, character etc. vector. Something like this:
+
+```{r, eval=FALSE}
+
+first_element <- function(x, ...){
+  UseMethod("first_element", x)
+}
+
+first_element.vector <- function(x){
+  x[1]
+}
+
+first_element(1:3)
+```
+
+## Answer
+
+By type, I assume you mean `class`. The `structure` function will allow you to define multiple classes of a vector.
+
+First, create some data and look at its class.
+
+```{r}
+set.seed(1)
+vector <- rnorm(100, mean = 1, sd = 3)
+class(vector)
+head(vector)
+```
+
+
+Now use the structure function on your vector to define additional classes. Then check the class again and call str function to see the classes and data of the new_vector object. 
+
+```{r}
+new_vector <- structure(vector, class = c("character", "integer", "numeric", "double"))
+class(new_vector)
+
+str(new_vector)
+```
