@@ -1,15 +1,17 @@
 ---
 title: "STL ts frequency = 1"
-output: pdf_document
+Author: "Justin M. Shea"
+output: 
+    github_document: default
+    pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## [\textcolor{blue}{"STL ts frequency = 1" post link}](https://stackoverflow.com/questions/45335193/stl-ts-frequency-1)
+## [Question Link](https://stackoverflow.com/questions/45335193/stl-ts-frequency-1)
 
-## Question
 
 I am using the stats::stl function for first time in order to identify and delete the tecnological signal of a crop yields serie. I am not familiar with this method and I am a newbie on programming, in advance I apologize for any mistaken.
 
