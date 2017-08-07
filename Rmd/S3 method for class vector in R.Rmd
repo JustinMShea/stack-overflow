@@ -31,21 +31,42 @@ first_element(1:3)
 
 By type, I assume you mean `class`. The `structure` function will allow you to define multiple classes of a vector.
 
+```{r}
+first_element <- function(x, ...) UseMethod("first_element")
+```
+
 First, create some data and look at its class.
 
 ```{r}
 set.seed(1)
-vector <- rnorm(100, mean = 1, sd = 3)
-class(vector)
-head(vector)
+x <- rnorm(100, mean = 1, sd = 3)
+vec <- structure(x, class = "first_element")
+class(vec)
+head(vec)
 ```
 
 
-Now use the structure function on your vector to define additional classes. Then check the class again and call str function to see the classes and data of the new_vector object. 
+
+
+Wrap the `first_element.vector` function around the `structure` function to define additional classes.  
 
 ```{r}
-new_vector <- structure(vector, class = c("character", "integer", "numeric", "double"))
+first_element.vectors <- function(x, ...){
+ 
+      structure(x, class = c("character", "integer", "numeric", "double"))
+           
+        }
+
+```
+
+Use the structure function on your vector to define additional classes. Then check the class again and call str function to see the classes and data of the new_vector object. 
+
+```{r}
+#vec <- structure(vec, class = "first_element")
+
+new_vector <- vectors(vec)
+
 class(new_vector)
 
-str(new_vector)
+head(new_vector)
 ```
