@@ -6,12 +6,12 @@ Multiple time series graphs in one plot disregarding empty fields
 
 I have a question that may be simple but have been having difficult times to find a solution for... I have a data for different companies and for different years that looks like this:
 
-![](C:\Users\Justin\Documents\R\stack-overflow\graphics\3iETs.png)
+![](https://github.com/JustinMShea/stack-overflow/blob/master/graphics/3iETs.png)
 
 I would like to draw a kind of time series graph for all the companies in one single graph. The point is that I don't want to have 0 for missing values for the corresponding intervals. The result that I expect will have the dates as the X axis and values as the Y axis. So, for example, the result for the line for CompanyA will be a horizontal line which starts from 2001-02 and ends at 2001-06 at the height of 1000 (as Y value). I would like to visualize the intervals for different companies... I was trying to use ggplot2 in R to draw it but not really successful... Could anybody help me to draw this in R? I have more than 500 rows and more than 180 columns.
 
-Answer
-------
+My Answer
+---------
 
 You have multiple issues here that are squarely in the area of "data wrangling". The biggest issue is to impute actual values into your missing value fields. Luckily, the xts time series library contains functions to do this, as well as a function to plot multiple time series, which is your ultimate goal.
 
@@ -114,4 +114,4 @@ When calling the `plot` function on objects of class `xts`, multivariate time se
 plot(df_locf)
 ```
 
-![](C:\Users\Justin\Documents\R\stack-overflow\github_documents\multiple_time_series_graphs_in_one_plot_disregarding_empty_fields_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
+![](https://github.com/JustinMShea/stack-overflow/blob/master/graphics/df_locf_xts.png)
