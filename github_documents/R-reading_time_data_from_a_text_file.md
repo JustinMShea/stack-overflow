@@ -1,0 +1,99 @@
+R-reading time data from a text file
+================
+
+[Question Link](https://stackoverflow.com/questions/45537853/r-reading-time-data-from-a-text-file/45538058#45538058)
+--------------------------------------------------------------------------------------------------------------------
+
+Hi and thanks in advance,
+
+So I'm currently trying to read a list of test dates from a text file that I want to try and plot on a graph with some test values(known as quantity).
+
+The issue I'm having is that when the times are read from the file, they are not read correctly. When I plot them onto a graph, the values are very distorted and incorrect, and don't display anything remotely resembling a date.
+
+Here is my code:
+
+``` r
+Frame <- read.table("....path.../Frame.txt")
+Frame$Time <- as.Date(Frame$Time)
+TheForecast <- naive(Frame)
+plot(TheForecast, xlab="Time",ylab="Quantity",main="Stock Quantity vs Time",type='l')
+```
+
+I have tried all the different formats of dates in the text file that I can think of, but they all return the same issue or worse ones. Here's what I've tried:
+
+``` r
+Time <- c("01/01/2010", "07/02/2010", "08/03/2010", "02/04/2011", "11/05/2011", 
+    "12/06/2011", "06/07/2012", "08/30/2012", "04/16/2013", "03/18/2013", "02/22/2014", 
+    "01/27/2014", "12/15/2015", "09/28/2015", "05/04/2016", "11/07/2017", "09/22/2017", 
+    "04/04/2017")
+
+Time <- c("2010-01-01", "2010-07-02", "2010-08-03", "2011-02-04", "2011-11-05", 
+    "2011-12-06", "2012-06-07", "2012-08-30", "2013-04-16", "2013-03-18", "2014-02-22", 
+    "2014-01-27", "2015-12-15", "2015-09-28", "2016-05-04", "2017-11-07", "2017-09-22", 
+    "2017-04-04")
+
+Time <- c("1 January 2010", "7 February 2010", "8 March 2010", "2 April 2011", 
+    "11 May 2011", "12 June 2011", "6 July 2012", "30 August 2012", "16 April 2013", 
+    "18 March 2013", "22 February 2014", "27 January 2014", "15 December 2015", 
+    "28 September 2015", "4 May 2016", "7 November 2017", "22 September 2017", 
+    "4 April 2017")
+```
+
+Here's the test values for the y (quantity) axis, just for reference:
+
+``` r
+Quantity <- c(5,3,8,4,0,5,2,7,4,2,6,8,4,7,8,9,4,6)
+```
+
+Here is an example of the file before reading:
+
+``` r
+Time Quantity
+1 2010-01-01 5
+2 2010-07-02 3
+3 2010-08-03 8
+4 2011-02-04 4
+5 2011-11-05 0
+6 2011-12-06 5
+7 2012-06-07 2
+8 2012-08-30 7
+9 2013-04-16 4
+10 2013-03-18 2
+11 2014-02-22 6
+12 2014-01-27 8
+13 2015-12-15 4
+14 2015-09-28 7
+15 2016-05-04 8
+16 2017-11-07 9
+17 2017-09-22 4
+18 2017-04-04 6
+```
+
+Thank you
+
+My Answer
+---------
+
+The `naive` function needs an object of class `ts` or time-series to display graphics properly.
+
+``` r
+file_p <- paste0(getwd(),"/data/Frame.txt")
+Frame <- read.table(file_p, stringsAsFactors = FALSE)
+Frame$Time <- as.Date(Frame$Time, format = "%Y-%m-%d")
+```
+
+Here is your missing step:
+
+``` r
+Frame <- ts(Frame$Quantity, start = 1, end = NROW(Frame), frequency = 1)
+```
+
+Then proceed with the rest and your time scale should be much more accurate:
+
+``` r
+library(forecast)
+TheForecast <- naive(Frame)
+plot(TheForecast, xlab="Time",ylab="Quantity",main="Stock Quantity vs Time",type='l')
+```
+
+![](C:\Users\Justin\Documents\R\stack-overflow\github_documents\R-reading_time_data_from_a_text_file_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
