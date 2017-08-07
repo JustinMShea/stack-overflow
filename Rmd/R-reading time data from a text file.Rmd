@@ -42,8 +42,6 @@ Here's the test values for the y (quantity) axis, just for reference:
 Quantity <- c(5,3,8,4,0,5,2,7,4,2,6,8,4,7,8,9,4,6)
 ```
 
-
-
 Here is an example of the file before reading:
 
 ```{r, eval=FALSE}
@@ -95,4 +93,5 @@ library(forecast)
 TheForecast <- naive(Frame)
 plot(TheForecast, xlab="Time",ylab="Quantity",main="Stock Quantity vs Time",type='l')
 ```
+
 

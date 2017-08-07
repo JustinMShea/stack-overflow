@@ -20,3 +20,6 @@ Each question and answer is written in an `.Rmarkdown` file and stored in the Rm
 [Mean Returns in Time Series - Restarting after NA values - rstudio .md](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/Mean_Returns_in_Time_Series-Restarting_after_NA_values-rstudio.md)
 
 [S3 method for class vector in R .md](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/S3_method_for_class_vector_in_R.md)
+
+
+[R-reading time data from a text file](https://github.com/JustinMShea/stack-overflow/blob/master/github_documents/R-reading_time_data_from_a_text_file.md)

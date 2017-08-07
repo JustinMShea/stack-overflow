@@ -96,4 +96,4 @@ TheForecast <- naive(Frame)
 plot(TheForecast, xlab="Time",ylab="Quantity",main="Stock Quantity vs Time",type='l')
 ```
 
-![](C:\Users\Justin\Documents\R\stack-overflow\github_documents\R-reading_time_data_from_a_text_file_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
+![](https://github.com/JustinMShea/stack-overflow/blob/master/graphics/Forecast_plot.png)
