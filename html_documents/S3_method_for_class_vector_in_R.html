@@ -26,7 +26,7 @@ body {
 <body>
 
 <h1 id="s3-method-for-class-vector-in-r">S3 method for class vector in R</h1>
-<h2 id="question-linkhttpsstackoverflow.comquestions45521273s3-method-for-class-vector-in-r">{Question Link](<a href="https://stackoverflow.com/questions/45521273/s3-method-for-class-vector-in-r" class="uri">https://stackoverflow.com/questions/45521273/s3-method-for-class-vector-in-r</a>)</h2>
+<h2 id="question-link"><a href="https://stackoverflow.com/questions/45521273/s3-method-for-class-vector-in-r">Question Link</a></h2>
 <p>Is it possible to create an S3 method for all vector types at once? I.e. one that is called for a numeric, integer, character etc. vector. Something like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">first_element &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...){
   <span class="kw">UseMethod</span>(<span class="st">&quot;first_element&quot;</span>, x)
@@ -48,10 +48,11 @@ vector &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="
 <pre><code>## [1] -0.8793614  1.5509300 -1.5068858  5.7858424  1.9885233 -1.4614052</code></pre>
 <p>Now use the structure function on your vector to define additional classes. Then check the class again and call str function to see the classes and data of the new_vector object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_vector &lt;-<span class="st"> </span><span class="kw">structure</span>(vector, <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;character&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;double&quot;</span>))
+
 <span class="kw">class</span>(new_vector)</code></pre></div>
 <pre><code>## [1] &quot;character&quot; &quot;integer&quot;   &quot;numeric&quot;   &quot;double&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(new_vector)</code></pre></div>
-<pre><code>## Classes 'character', 'integer', 'numeric', 'double'  num [1:100] -0.879 1.551 -1.507 5.786 1.989 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(new_vector)</code></pre></div>
+<pre><code>## [1] -0.8793614  1.5509300 -1.5068858  5.7858424  1.9885233 -1.4614052</code></pre>
 
 </body>
 </html>
