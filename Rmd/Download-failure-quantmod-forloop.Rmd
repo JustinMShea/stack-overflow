@@ -1,0 +1,74 @@
+---
+title: "Download-failure-quantmod-forloop"
+author: "Justin M. Shea"
+date: "September 12, 2018"
+output: pdf_document
+---
+
+## [Question Link](https://stackoverflow.com/questions/52268028/download-failed-while-using-quantmod-function-getsymbols-in-for-loop)
+
+I am trying to get data for the 1632 stocks that comprise the NSE index in India using the quantmod package. I am able to download stocks individually; however, when I loop over all the stocks, I am getting a timeout. How do I loop the getSymbols function to download the desire data?
+
+Following error is reported:
+
+> Error: '20MICRONS.NS' download failed after two attempts. Error message: HTTP error 404. 5. stop(Symbols.name, " download failed after two attempts. Error", " message:\n", attr(dl, "condition")$message, call. = FALSE) 4. getSymbols.yahoo(Symbols = "'20MICRONS.NS'", env = , verbose = FALSE, warnings = TRUE, auto.assign = TRUE) 3. do.call(paste("getSymbols.", symbol.source, sep = ""), list(Symbols = current.symbols, env = env, verbose = verbose, warnings = warnings, auto.assign = auto.assign, ...)) 2. getSymbols(as.character(x), src = "yahoo") 1. f(Symbol[i])
+
+
+```{r, eval=FALSE}
+MyData <- read.csv(file="C:/Documents/EQUITY_L.csv", header=TRUE)
+Symbol <- MyData$SYMBOL
+
+f <- function(x) { getSymbols(as.character(x), src='yahoo') }
+for (i in 1:1632) { f(Symbol[i]) }
+```
+
+
+## Answer
+
+Ok, now I see...
+
+First download Symbols from: https://www.nseindia.com/corporates/content/securities_info.htm 
+It's the first file listed on the page.
+
+It appears each symbol from the NSE file needs to add an ".NS" suffix. That's why you can download the equities individually, but it fails when you pass the Symbol column of your file to getSymbols.
+
+I'd also create a new environment to dump every stock into and keep your global environment manageable.
+
+Finally, pass NSE_Symbols to quantmods getSymbols function for daily data. I Like to use sapply coupled with try so that if you hit a bad symbol, the HTTP error 404 won't halt the remaining symbols from downloading.
+
+```{r, eval=FALSE}
+EQUITY_L <- read.csv("~/R/stack-overflow/data/EQUITY_L.csv", stringsAsFactors = FALSE)
+
+NSE_Symbols <- paste0(EQUITY_L$SYMBOL,".NS")
+
+NSE_stocks <- new.env() 
+
+library(quantmod)
+sapply(NSE_Symbols, function(x){try(getSymbols(x, env=NSE_stocks), silent=TRUE)})
+```
+
+Next, test and find out which symbols didn't download. I was able to get all but 17.
+
+```{r, eval=FALSE}
+length(NSE_Symbols[!(NSE_Symbols %in% names(NSE_stocks))])
+```
+> [1] 17
+
+```{r, eval=FALSE}
+NSE_Symbols[!(NSE_Symbols %in% names(NSE_stocks))]
+```
+> [1] "3PLAND.NS"     "BHAGYANGR.NS"  "CHEMFAB.NS"    "ELECTROSL.NS"  "GANGESSECU.NS" 
+[6] "GMMPFAUDLR.NS" "GUJRAFFIA.NS"  "HBSL.NS"       "KALYANI.NS"    "MAGADSUGAR.NS" 
+[11] "MANAKCOAT.NS"  "MCDOWELL-N.NS" "NIRAJISPAT.NS" "PALASHSECU.NS" "SIGIND.NS"
+[16]"SPTL.NS"       "SUBCAPCITY.NS"
+
+The symbols which downloaded succesfully will be neatly contained in the NSE_stocks environment.
+
+Good luck,
+
+
+**Bonus:*** If you just need the closing price, you can bring the securities back into the global environment as single xts object with this: 
+
+```{r, eval=FALSE}
+NSE_xts <- do.call(merge, eapply(NSE_stocks, Ad))
+```
